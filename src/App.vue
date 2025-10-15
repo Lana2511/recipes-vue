@@ -7,8 +7,8 @@
 
 <script>
 import { ref } from 'vue'
-import RecipesList from './components/RecipesList.vue'
-import RecipeInfo from './components/RecipeInfo.vue'
+import RecipesListPage from './pages/RecipesListPage.vue'
+import RecipeInfoPage from './pages/RecipeInfoPage.vue'
 
 export default {
   name: 'App',

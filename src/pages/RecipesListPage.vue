@@ -1,5 +1,5 @@
 <template>
-  <div class="recipe-list">
+  <div class="recipes-list">
     <div v-if="loading" class="loading">
       <div class="spinner"></div>
       Загрузка рецептов...
@@ -34,14 +34,14 @@
 <script>
 import { ref, onMounted } from 'vue'
 import { getRecipes } from "../services/api.js";
-import RecipeItem from './RecipeItem.vue'
+import RecipeItem from '../components/RecipeItem.vue'
 
 export default {
   name: 'RecipesList',
   components: {
     RecipeItem
   },
-  
+
   setup() {
     const recipes = ref([])
     const loading = ref(true)
@@ -50,7 +50,7 @@ export default {
     const fetchRecipes = async () => {
       loading.value = true
       error.value = null
-      
+
       try {
         recipes.value = await getRecipes()
       } catch (err) {
@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style scoped>
-.recipe-list {
+.recipes-list {
   padding: 20px 0;
 }
 

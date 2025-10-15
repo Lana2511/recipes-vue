@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import RecipesList from '../components/RecipesList.vue'
-import RecipeInfo from '../components/RecipeInfo.vue'
+import RecipesListPage from '../pages/RecipesListPage.vue'
+import RecipeInfoPage from '../pages/RecipeInfoPage.vue'
 
 const routes = [
     {
         path: '/',
         name: 'Home',
-        component: RecipesList
+        component: RecipesListPage
     },
 
     {
         path: '/recipe/:id',
         name: 'Recipe',
-        component: RecipeInfo,
+        component: RecipeInfoPage,
         props: route => ({ recipeId: route.params.id })
     }
 

@@ -44,6 +44,12 @@
         required: true,
       }
     },
+
+    setup(props) {
+      return {
+        props
+      }
+    }
   }
   </script>
 

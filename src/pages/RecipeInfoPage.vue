@@ -102,9 +102,9 @@
         </div>
       </div>
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
   import { ref, onMounted, watch } from 'vue'
   import {getRecipeById} from "../services/api.js";
 
@@ -155,7 +155,7 @@
       }
     }
   }
-  </script>
+</script>
 
 <style scoped>
 .recipe-detail {
