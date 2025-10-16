@@ -104,57 +104,46 @@
     </div>
 </template>
   
-<script>
-  import { ref, onMounted, watch } from 'vue'
-  import {getRecipeById} from "../services/api.js";
+<script setup>
+import { ref, onMounted, watch } from 'vue'
+import {getRecipeById} from "../services/api.js";
 
   
-  export default {
-    name: 'RecipeInfo',
-    props: {
-      recipeId: {
-        type: Object,
-        required: true
-      }
-    },
-    
-    setup(props) {
-      const recipe = ref(null)
-      const loading = ref(true)
-      const error = ref(null)
-  
-      const fetchRecipe = async () => {
-        loading.value = true
-        error.value = null
-        
-        try {
-          recipe.value = await getRecipeById(props.recipeId)
-        } catch (err) {
-          console.error('Ошибка загрузки рецепта:', err)
-          error.value = err.response?.data?.message || err.message || 'Неизвестная ошибка'
-        } finally {
-          loading.value = false
-        }
-      }
-
-      onMounted(() => {
-        fetchRecipe()
-      })
-
-      watch(() => props.recipeId, (newId) => {
-        if (newId) {
-          fetchRecipe()
-        }
-      })
-  
-      return {
-        recipe,
-        loading,
-        error,
-        fetchRecipe
-      }
-    }
+const props = defineProps({
+  recipeId: {
+    type: Object,
+    required: true
   }
+})
+    
+const recipe = ref(null)
+const loading = ref(true)
+const error = ref(null)
+  
+const fetchRecipe = async () => {
+  loading.value = true
+  error.value = null
+        
+  try {
+    recipe.value = await getRecipeById(props.recipeId)
+  } catch (err) {
+    console.error('Ошибка загрузки рецепта:', err)
+    error.value = err.response?.data?.message || err.message || 'Неизвестная ошибка'
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(async () => {
+  await fetchRecipe()
+})
+
+watch(() => props.recipeId, (newId) => {
+  if (newId) {
+    fetchRecipe()
+  }
+})
+
 </script>
 
 <style scoped>
