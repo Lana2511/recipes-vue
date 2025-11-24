@@ -1,14 +1,10 @@
 <template>
-  <div id="app">
-    <h1>Сборник рецептов</h1>
+  <main id="app">
     <RouterView />
-  </div>
+  </main>
 </template>
 
 <script>
-import { ref } from 'vue'
-import RecipesListPage from './pages/RecipesListPage.vue'
-import RecipeInfoPage from './pages/RecipeInfoPage.vue'
 
 export default {
   name: 'App',
@@ -24,14 +20,5 @@ export default {
   background: #f8f9fa;
   min-height: 100vh;
   box-sizing: border-box;
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 2.5rem;
-  font-weight: 600;
-  line-height: 1.2;
-  color: #6b184e;
 }
 </style>
