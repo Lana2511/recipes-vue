@@ -35,16 +35,13 @@
     </RouterLink>
   </template>
   
-  <script>
-  export default {
-    name: 'RecipeItem',
-    props: {
-      recipe: {
-        type: Object,
-        required: true,
-      }
-    },
-  }
+  <script setup>
+  defineProps ({
+    recipe: {
+      type: Object,
+      required: true
+    }
+  })
   </script>
 
   <style scoped>

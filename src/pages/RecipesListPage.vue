@@ -1,5 +1,5 @@
 <template>
-  <div class="recipe-list">
+  <div class="recipes-list">
     <div v-if="loading" class="loading">
       <div class="spinner"></div>
       Загрузка рецептов...
@@ -31,52 +31,37 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted } from 'vue'
 import { getRecipes } from "../services/api.js";
-import RecipeItem from './RecipeItem.vue'
+import RecipeItem from '../components/RecipeItem.vue'
 
-export default {
-  name: 'RecipesList',
-  components: {
-    RecipeItem
-  },
-  
-  setup() {
-    const recipes = ref([])
-    const loading = ref(true)
-    const error = ref(null)
+const recipes = ref([])
+const loading = ref(true)
+const error = ref(null)
 
-    const fetchRecipes = async () => {
-      loading.value = true
-      error.value = null
-      
-      try {
-        recipes.value = await getRecipes()
-      } catch (err) {
-        error.value = err.message
-        console.error('Ошибка загрузки рецептов:', err)
-      } finally {
-        loading.value = false
-      }
-    }
+const fetchRecipes = async () => {
+  loading.value = true
+  error.value = null
 
-    onMounted(() => {
-      fetchRecipes()
-    })
-
-    return {
-      recipes,
-      loading,
-      error,
-      fetchRecipes
-    }
+  try {
+    recipes.value = await getRecipes()
+  } catch (err) {
+    error.value = err.message
+    console.error('Ошибка загрузки рецептов:', err)
+  } finally {
+    loading.value = false
   }
 }
+
+onMounted(async () => {
+  await fetchRecipes()
+})
+
 </script>
 
 <style scoped>
-.recipe-list {
+.recipes-list {
   padding: 20px 0;
 }
 
