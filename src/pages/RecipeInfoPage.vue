@@ -1,5 +1,12 @@
 <template>
-    <div class="recipe-detail">
+  <div  class="header">
+    <h1 class="title">Сборник рецептов</h1>
+    <RouterLink to="/favourites" class="fav-btn">
+      Избранное ❤️
+    </RouterLink>
+  </div>
+
+  <div class="recipe-detail">
       <RouterLink to="/" class="back-btn">
         ← Назад к списку
       </RouterLink>
@@ -19,8 +26,14 @@
       <div v-else-if="recipe" class="recipe-content">
 
         <div class="recipe-header">
-          <div class="recipe-image">
-            <img :src="recipe.image" :alt="recipe.name" />
+          <div class="recipe-image-section">
+            <div class="recipe-image">
+              <img :src="recipe.image" :alt="recipe.name" />
+            </div>
+            <button class="like-btn" @click="toggleLike">
+              <span v-if="!isLiked">❤️ Добавить в избранное</span>
+              <span v-else>💔 Убрать из избранного</span>
+            </button>
           </div>
           
           <div class="recipe-info">
@@ -105,8 +118,9 @@
 </template>
   
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import {getRecipeById} from "../services/api.js";
+import { useLikesStore } from "../stores/useLikesStore.js";
 
   
 const props = defineProps({
@@ -119,6 +133,15 @@ const props = defineProps({
 const recipe = ref(null)
 const loading = ref(true)
 const error = ref(null)
+const likesStore = useLikesStore()
+
+const isLiked = computed(() => recipe.value ? likesStore.isFavourite(recipe.value.id) : false)
+
+const toggleLike = () => {
+  if (recipe.value) {
+    likesStore.toggleFavourite(recipe.value)
+  }
+}
   
 const fetchRecipe = async () => {
   loading.value = true
@@ -147,6 +170,37 @@ watch(() => props.recipeId, (newId) => {
 </script>
 
 <style scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #6b184e;
+}
+
+.fav-btn {
+  background: #6b184e;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.fav-btn:hover {
+  background: #521138;
+}
+
 .recipe-detail {
   max-width: 1000px;
   margin: 0 auto;
@@ -169,6 +223,27 @@ watch(() => props.recipeId, (newId) => {
 
 .back-btn:hover {
   background: #d63b6a;
+  transform: translateY(-1px);
+}
+
+.like-btn {
+  background: #fff;
+  color: #e75480;
+  border: 2px solid #e75480;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.like-btn:hover {
+  background: #e75480;
+  color: white;
   transform: translateY(-1px);
 }
 

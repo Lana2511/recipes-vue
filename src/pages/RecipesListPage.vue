@@ -1,4 +1,11 @@
 <template>
+  <div  class="header">
+    <h1 class="title">Сборник рецептов</h1>
+    <RouterLink to="/favourites" class="fav-btn">
+      Избранное ❤️
+    </RouterLink>
+  </div>
+
   <div class="recipes-list">
     <div v-if="loading" class="loading">
       <div class="spinner"></div>
@@ -33,7 +40,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getRecipes } from "../services/api.js";
+import { getRecipes } from "../services/api.ts";
 import RecipeItem from '../components/RecipeItem.vue'
 
 const recipes = ref([])
@@ -61,6 +68,37 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #6b184e;
+}
+
+.fav-btn {
+  background: #6b184e;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.fav-btn:hover {
+  background: #521138;
+}
+
 .recipes-list {
   padding: 20px 0;
 }
